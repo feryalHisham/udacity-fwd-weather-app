@@ -2,15 +2,20 @@
 const weatherApiBaseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip={zip}'
 const weatherApiKey = '&appid=73da9a79340b43b9bd793bbed9e1a89a';
 
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-
 /**
- * Callback function of generate button. It calls the fetchWeather() function
+ * Callback function of generate button. It calls the fetchWeather() function and chain promises to post data to server and update UI.
  */
 function generateCallBack() {
-    fetchWeather(weatherApiBaseUrl, weatherApiKey, document.getElementById('zip').value);
+    fetchWeather(weatherApiBaseUrl, weatherApiKey, document.getElementById('zip').value)
+    .then(weatherData => {
+        const userFeelings = document.getElementById('feelings').value;
+        const data = {temperature: weatherData.main.temp, date: getDate(), userResponse: userFeelings};
+        sendWeatherToServer('/addWeather', data)
+        .then(() => {getWeatherFromServer('/getWeather').then(dataFromServer => {
+            console.log(dataFromServer);
+        });
+    });
+    });
 }
 
 /**
@@ -25,7 +30,61 @@ const fetchWeather = async (baseUrl, key, cityZipCode) => {
     try {
         const weatherData = await weatherResponse.json();
         console.log(weatherData);
+        return weatherData;
     } catch(error) {
         console.log(error);
     }
+}
+
+/**
+ * Calls fetch method to GET weather data from server
+ * @param {*} url GET Route in server
+ * @returns the data from server
+ */
+const getWeatherFromServer = async ( url = '') => {
+
+    const response = await fetch(url);
+
+    try {
+      const newData = await response.json();
+      return newData;
+    } catch(error) {
+        console.log("error", error);
+    }
+}
+
+/**
+ * Calls fetch method to POST weather data to server
+ * @param {*} url POST Route in server
+ * @param {*} data send as request body to server
+ * @returns 
+ */
+const sendWeatherToServer = async ( url = '', data = {})=>{
+    const response = await fetch(url, {
+    method: 'POST', 
+    credentials: 'same-origin', 
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),        
+  });
+
+    try {
+      const newData = await response.json();
+      return newData;
+    } catch(error) {
+        console.log("error", error);
+    }
+}
+
+//////////////////////////////// Util functions////////////////////////////
+
+/**
+ * Creates a new date instance dynamically with JS
+ * @returns current data in format of MM.DD.YYYY
+ */
+function getDate() {
+    let d = new Date();
+    let newDate = (d.getMonth() + 1)  +'.'+ d.getDate()+'.'+ d.getFullYear();
+    return newDate;
 }
