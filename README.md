@@ -11,7 +11,7 @@ Before you can run this project you need to install the following:
 - [Node.js](https://nodejs.org/en/download/)
 - Check that Node.js is installed by typing `node --version` in the terminal (or cmd)
 - After Node is installed, open the project directory in terminal and install the required packages:
-    - `npm i express cors body-parser`
+    - `npm install` will automatically install the dependences in the package.json
 
 ## Run the project
 To run the project type `node server.js` in the terminal pointing to the project directory. This will setup the server printing `running on localhost: 3000`
