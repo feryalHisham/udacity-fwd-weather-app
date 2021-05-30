@@ -1,5 +1,11 @@
-/* Global Variables */
-const weatherApiBaseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip={zip}'
+/**
+ * `weatherApiBaseUrl` URL of Open Weather Map querying the weather using the zip code of the city
+ */
+const weatherApiBaseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip={zip}';
+
+/**
+ * `weatherApiKey` my personal API key aquired by signing up
+ */
 const weatherApiKey = '&appid=73da9a79340b43b9bd793bbed9e1a89a';
 
 /**

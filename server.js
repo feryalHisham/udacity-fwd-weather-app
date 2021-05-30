@@ -1,5 +1,11 @@
-// Setup empty JS object to act as endpoint for all routes
+/**
+ * projectData acts as the API endpoint. 
+ */
 projectData = [];
+
+/**
+ * Server will run using the port 3000
+ */
 const port = 3000;
 
 // Require Express to run server and routes
@@ -12,8 +18,7 @@ const app = express();
 const bodyParser = require('body-parser')
 const cors = require('cors');
 
-/* Middleware*/
-//Here we are configuring express to use body-parser as middle-ware.
+/* BodyParser Middleware*/
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -27,6 +32,9 @@ app.use(express.static('website'));
 // Setup Server
 const server = app.listen(port, listening);
 
+/**
+ * Callback function for running the server
+ */
 function listening(){
 console.log(`running on localhost: ${port}`);
 };
