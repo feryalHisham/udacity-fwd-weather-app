@@ -12,7 +12,7 @@ function generateCallBack() {
         const data = {temperature: weatherData.main.temp, date: getDate(), userResponse: userFeelings};
         sendWeatherToServer('/addWeather', data)
         .then(() => {getWeatherFromServer('/getWeather').then(dataFromServer => {
-            console.log(dataFromServer);
+            updateFields(dataFromServer);
         });
     });
     });
@@ -29,7 +29,6 @@ const fetchWeather = async (baseUrl, key, cityZipCode) => {
     const weatherResponse = await fetch(baseUrl.replace('{zip}', cityZipCode).concat(key), {mode: 'cors'});
     try {
         const weatherData = await weatherResponse.json();
-        console.log(weatherData);
         return weatherData;
     } catch(error) {
         console.log(error);
@@ -75,6 +74,17 @@ const sendWeatherToServer = async ( url = '', data = {})=>{
     } catch(error) {
         console.log("error", error);
     }
+}
+
+/**
+ * Updates UI Fields `date`, `temp` and `content` according to the data recieved from server;
+ * @param {*} data recieved from server
+ */
+function updateFields(data) {
+    const lastEntry = data[data.length - 1];
+    document.getElementById('date').innerText = lastEntry.date;
+    document.getElementById('temp').innerText = lastEntry.temperature + ' degress Fahrenheit';
+    document.getElementById('content').innerText = lastEntry.userResponse;
 }
 
 //////////////////////////////// Util functions////////////////////////////
