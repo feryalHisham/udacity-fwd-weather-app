@@ -6,7 +6,7 @@ const weatherApiBaseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip={z
 /**
  * `weatherApiKey` my personal API key aquired by signing up
  */
-const weatherApiKey = '&appid=73da9a79340b43b9bd793bbed9e1a89a';
+const weatherApiKey = '&appid=73da9a79340b43b9bd793bbed9e1a89a&units=metric';
 
 /**
  * Callback function of generate button. It calls the fetchWeather() function and chain promises to post data to server and update UI.
@@ -87,9 +87,9 @@ const sendWeatherToServer = async ( url = '', data = {})=>{
  * @param {*} data recieved from server
  */
 function updateFields(data) {
-    document.getElementById('date').innerText = data.date;
-    document.getElementById('temp').innerText = data.temperature + ' degress Fahrenheit';
-    document.getElementById('content').innerText = data.userResponse;
+    document.getElementById('date').innerHTML = data.date;
+    document.getElementById('temp').innerHTML = data.temperature + ' degress Celsius';
+    document.getElementById('content').innerHTML = data.userResponse;
 }
 
 //////////////////////////////// Util functions////////////////////////////

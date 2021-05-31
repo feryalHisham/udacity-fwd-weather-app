@@ -63,6 +63,5 @@ function addNewWeatherEntry(request, response) {
   projectData.temperature = request.body.temperature;
   projectData.date = request.body.date;
   projectData.userResponse = request.body.userResponse;
-  projectData.push(weather);
   response.send(projectData);
 }
