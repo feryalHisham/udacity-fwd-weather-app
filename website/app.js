@@ -21,6 +21,8 @@ function generateCallBack() {
             updateFields(dataFromServer);
         });
     });
+    }).catch(error => {
+        console.log(error);
     });
 }
 
@@ -31,13 +33,16 @@ function generateCallBack() {
  * @param {*} cityZipCode city zip code obtained from user input
  */
 const fetchWeather = async (baseUrl, key, cityZipCode) => {
-
+    displayError(false);
     const weatherResponse = await fetch(baseUrl.replace('{zip}', cityZipCode).concat(key), {mode: 'cors'});
     try {
         const weatherData = await weatherResponse.json();
+        if(!weatherData.main) {
+            throw weatherData;
+        }
         return weatherData;
     } catch(error) {
-        console.log(error);
+        handleError(error.message);
     }
 }
 
@@ -90,6 +95,28 @@ function updateFields(data) {
     document.getElementById('date').innerHTML = data.date;
     document.getElementById('temp').innerHTML = data.temperature + ' degress Celsius';
     document.getElementById('content').innerHTML = data.userResponse;
+}
+
+/**
+ * Handles error returned from openweathermap API by setting the innerHTML of the error div and clearing the `Most Recent Entry` section
+ * @param {*} error 
+ */
+function handleError(error) {
+    const errorDiv = document.getElementById('errorDiv');
+    errorDiv.innerHTML = error;
+    displayError(true);
+    document.getElementById('date').innerHTML = '';
+    document.getElementById('temp').innerHTML = '';
+    document.getElementById('content').innerHTML = '';
+}
+
+/**
+ * Displays the error div
+ * @param {*} show 
+ */
+function  displayError(show) {
+    const errorDiv = document.getElementById('errorDiv');
+    errorDiv.style.display = show ? 'contents' : 'none';
 }
 
 //////////////////////////////// Util functions////////////////////////////

@@ -44,6 +44,7 @@ input{
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
     border: none;
+    margin-right: 20px;
 }
 
 button{
@@ -92,3 +93,7 @@ button:focus {
     font-family: 'Oswald', sans-serif;
 
 } 
+
+#errorDiv {
+    display: none;
+}
