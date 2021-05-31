@@ -1,7 +1,7 @@
 /**
  * projectData acts as the API endpoint. 
  */
-projectData = [];
+projectData = {};
 
 /**
  * Server will run using the port 3000
@@ -60,7 +60,9 @@ app.post('/addWeather', addNewWeatherEntry);
  * @param {*} response to client
  */
 function addNewWeatherEntry(request, response) {
-    const weather = {temperature: request.body.temperature, date: request.body.date, userResponse: request.body.userResponse };
-    projectData.push(weather);
-    response.send(projectData);
+  projectData.temperature = request.body.temperature;
+  projectData.date = request.body.date;
+  projectData.userResponse = request.body.userResponse;
+  projectData.push(weather);
+  response.send(projectData);
 }

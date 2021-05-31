@@ -87,10 +87,9 @@ const sendWeatherToServer = async ( url = '', data = {})=>{
  * @param {*} data recieved from server
  */
 function updateFields(data) {
-    const lastEntry = data[data.length - 1];
-    document.getElementById('date').innerText = lastEntry.date;
-    document.getElementById('temp').innerText = lastEntry.temperature + ' degress Fahrenheit';
-    document.getElementById('content').innerText = lastEntry.userResponse;
+    document.getElementById('date').innerText = data.date;
+    document.getElementById('temp').innerText = data.temperature + ' degress Fahrenheit';
+    document.getElementById('content').innerText = data.userResponse;
 }
 
 //////////////////////////////// Util functions////////////////////////////
